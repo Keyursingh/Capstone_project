@@ -1,0 +1,83 @@
+select order_id,
+customer_id,
+cust_first_name||' '||cust_last_name as name,
+order_total as spent_amt,
+marital_status,
+gender,
+income_level,
+credit_limit,
+order_mode,
+nls_territory,
+date_of_birth,
+order_date
+from oe.orders
+join oe.customers
+using(customer_id)
+group by order_id,
+customer_id,
+cust_first_name||' '||cust_last_name,
+order_total,
+marital_status,
+gender,
+income_level,
+credit_limit,
+order_mode,
+nls_territory,
+date_of_birth,
+order_date;
+
+select order_id,
+product_id, 
+translated_name,
+translated_description,
+quantity,
+category_id,
+list_price,
+min_price,
+unit_price,
+supplier_id,
+warranty_period,
+warehouse_id,
+quantity_on_hand,
+warehouse_name,
+order_date
+from 
+oe.orders
+join oe.order_items
+using(order_id)
+join oe.product_descriptions
+using(product_id)
+join oe.product_information
+using(product_id)
+join oe.inventories
+using(product_id)
+join oe.warehouses
+using(warehouse_id)
+group by order_id,
+product_id, 
+translated_name,
+translated_description,
+quantity,
+category_id,
+list_price,
+min_price,
+unit_price,
+supplier_id,
+warranty_period,
+warehouse_id,
+quantity_on_hand,
+warehouse_name,
+order_date;
+
+select order_id,
+translated_name,
+product_name,
+quantity
+from oe.product_descriptions
+join oe.product_information
+using (product_id)
+join oe.order_items
+using(product_id)
+join oe.orders
+using(order_id)
+order by quantity desc;
